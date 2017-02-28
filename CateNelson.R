@@ -10,17 +10,31 @@ CateNelson <- function(x,y, xcn, ycn, TNpos="ul",
                        grid=NULL)
 {
 
+  # Theory
+  
   # TN | FP
   # -------
   # FN | TP
 
-  # Spécificité = TN/(TN+FP): probabilité qu'un haut rendement soit bien balancé
-  # Sensitivité = TP/(TP+FN): probabilité qu'un bas rendement soit débalancé
-  # Positive predictive value PPV = TP/(TP+FP): probabilité qu'un diagnostique débalancé donne un mauvais rendement
-  # Negative predictive value NPV = TN/(TN+FN): probabilité qu'un diagnostique balancé donne un bon rendement
+  # Spécificity = TN/(TN+FP): probability that a high yield is well balanced
+  # Sensitivity = TP/(TP+FN): probability a low yield is misbalanced
+  # Positive predictive value PPV = TP/(TP+FP): probability that a misbalanced diagnosis end up as low yielder
+  # Negative predictive value NPV = TN/(TN+FN): probability that a balanced diagnosis end up as high yielder
 
-  # FP: consommation de luxe
-  # FN: facteur externe (climat, bibittes, Sillicium, eau, mercure, ensoleillement, carbone, pH, etc.)
+  # x, y: x- and y-axes, numerical vectors
+  # xcn, ycn: x and y delimiters, numerical scalars
+  # xlab, ylab: x and y axis labels, character scalars
+  # anovm: plot anovm? boolean
+  # anovm.span, anovm.degree: smoothness of the anovm
+  # dens.plot: plot high and low yield densities? boolean
+  # colors: color scheme, clarity, greys, Dark2, pastel1, shootit, nature
+  # pch.cex: point size
+  # pchType: point types respectively for FN, FP, TN and TP
+  # pch.per.quadrant: different pch types per quadrant? boolean
+  # filled.by: color to fill the points
+  # draw.ellipse: should ellipses be plotted? none: no ellipses, err: error, dev: deviation, both: error and deviation
+  # level.elliose: confidence level for ellipses
+  # grid: plot grid of points
 
   if(colors == "clarity") {
     colors <- c("#f8766d", "#7cae00", "#c77cff", "#00bfc4", "grey15")
