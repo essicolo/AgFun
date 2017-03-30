@@ -8,7 +8,7 @@ Functions for agricultural data analysis.
 `codadend2.R`. Function similar to compositions::CoDaDendrogram, but with extended capabilities, like plotting densities or boxplots per group over the horizontal bars.
 
 ## Compositional confidence intervals
-`compci.R`. A function that computes confidence intervals on compositional data based on Monte-Carlo simulations.
+`compci.R`. A function that computes confidence intervals on compositional data based on Monte-Carlo simulations. To be used carefully.
 
 ## Diagnosis and recommandation integrated system
 `DRIS.R`. A function that conpute DRIS indices with several methods to assess the leaf nutritionnal status of plants.
