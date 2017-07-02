@@ -240,7 +240,7 @@ CateNelson <- function(x,y, xcn, ycn, TNpos="ul",
   plot(x=c(0,1), y=c(0,1), type="n", xaxt='n', yaxt='n', xlab=NA, ylab=NA)
   rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col ="grey30") # fond# grey 30
   #text(x=0.5, y=0.5, paste("Prev.=\n", round(prevalence,2), sep=""), col="white")
-  text(x=0.5, y=0.5, paste("Acc.=\n", round(accuracy,2), sep=""), col="white")
+  text(x=0.5, y=0.5, paste("Acc.=\n", formatC(accuracy, format="f", digits=2), sep=""), col="white")
 
   par(mar=c(4,0,0,0))
   plot(cnData[,1],cnData[,2], type="n", xaxt='n', yaxt='n', xlab=NA, ylab=NA)
