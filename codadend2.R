@@ -1,21 +1,24 @@
-require(compositions)
 CoDaDendrogram2 = function(comp, V, equal.height=FALSE, range=c(-4,4),
-                           show.range=TRUE, group=NULL,
-                           type="none", conf.level=0.95, conf.method="t", 
-                           pch.col = TRUE, ...) 
-######
+         show.range=TRUE, n_digits,
+         group=NULL,
+         type="none", conf.level=0.95, conf.method="t", 
+         pch.col = TRUE, ...) 
+  ######
 # comp: compositional matrix 
 # V: orthonormal basis
 # equal.heigh: boolean, if TRUE, vertival branches will all have the same height. 
 #              if FALSE, the height of vertical bars is the variance of the balance divided by total variance
-# range: a vector of 2 numbers, designing the range of all balances. For automatic range, specify "auto"
+# range: a vector of 2 numbers, designing the range of all balances. 
+#  For automatic range scaled on all data, specify "auto"
+#  For automatic range scaled on confidence intervals, specify "autoconf"
 # show.range: boolean, show range labels on nodes
+# n_digits: the number of digits to show in range
 # group: grouping factor for type != "none"
 # type: plots over balances, choices "boxplot", "conf" and "density"
 # conf.level: confidence level if type is "conf"
 # conf.method: if type is "conf", "t" for student (qt) or "normal" for normal (qnorm)
 #####
-  
+
 {
   # funct
   ## initialisation
@@ -55,14 +58,40 @@ CoDaDendrogram2 = function(comp, V, equal.height=FALSE, range=c(-4,4),
   }  
   
   # horizontal bars' ranges
-  if (is.numeric(range)) { # not neat. change condition here. if any character of whatever not numeric, it supposes auto
+  if (is.matrix(range)) {
+    range=range # obviously
+  } else if (is.numeric(range)) { # not neat. change condition here. if any character of whatever not numeric, it supposes auto
     range = as.matrix(range)
     range = range[,rep(1,ncol(bal_o))]
     auto.range = FALSE
+  } else if (is.character(range)) {
+    if (range=='auto') {
+      range = matrix()
+      range = apply(bal_o, 2, range)
+      auto.range = TRUE
+    } else if (range=='autoconf') {
+      range_min = rep(NA, ncol(bal_o))
+      range_max = range_min
+      for (i in 1:nlevels(group)){
+        confrange = apply(bal_o[group==levels(group)[i], ], 2, ci)
+        for (j in 1:ncol(bal_o)) {
+          range_min[j] = min(range_min[j], confrange[1, j], na.rm=TRUE)
+          range_max[j] = max(range_max[j], confrange[3, j], na.rm=TRUE)
+        }
+      }
+      range = rbind(range_min, range_max)
+      auto.range = TRUE
+    } else {
+      range = matrix()
+      range = apply(bal_o, 2, range)
+      auto.range = TRUE
+      print('unknown range type, using auto')
+    }
   } else {
     range = matrix()
     range = apply(bal_o, 2, range)
     auto.range = TRUE
+    print('unknown range type, using auto')
   }
   
   
@@ -130,7 +159,7 @@ CoDaDendrogram2 = function(comp, V, equal.height=FALSE, range=c(-4,4),
   if (show.range) {
     for (i in 1:(ncol(V))) {
       text(x = c(nodes[i, 1], nodes[i, 2]), y = heights[i],
-           labels = formatC(c(round(range[1,i],1), round(range[2,i],1)), format='f', digits=1),
+           labels = formatC(c(round(range[1,i],1), round(range[2,i],1)), format='f', digits=n_digits),
            pos=3, cex=0.6)
     }
   }
@@ -178,24 +207,6 @@ CoDaDendrogram2 = function(comp, V, equal.height=FALSE, range=c(-4,4),
   
   ### confidence intervals
   if (type == "conf") {
-    # home made conf. int. function
-    ci <- function (x, level=conf.level, method="t") {
-      a <- mean(x)
-      s <- sd(x)
-      n <- length(x)
-      
-      if (method == "t") {
-        error <- qt(1-(1-level)/2, df=n-1)*s/sqrt(n)
-      } else {
-        error <- qnorm(1-(1-level)/2)*s/sqrt(n)
-      }
-      
-      left <- a-error
-      right <- a+error
-      out <- c(left, a, right)
-      return(out)
-    }
-    
     if (is.null(group)) {
       group = factor(rep(1, times=nrow(comp)))
       ngroup = 1
@@ -231,7 +242,7 @@ CoDaDendrogram2 = function(comp, V, equal.height=FALSE, range=c(-4,4),
   
   ### density
   if (type == "density") {
-        
+    
     if (is.null(group)) {
       group = factor(rep(1, times=nrow(comp)))
       ngroup = 1
@@ -266,4 +277,20 @@ CoDaDendrogram2 = function(comp, V, equal.height=FALSE, range=c(-4,4),
   
 }
 
-
+# home made conf. int. function
+ci <- function (x, level=conf.level, method="t") {
+  a <- mean(x)
+  s <- sd(x)
+  n <- length(x)
+  
+  if (method == "t") {
+    error <- qt(1-(1-level)/2, df=n-1)*s/sqrt(n)
+  } else {
+    error <- qnorm(1-(1-level)/2)*s/sqrt(n)
+  }
+  
+  left <- a-error
+  right <- a+error
+  out <- c(left, a, right)
+  return(out)
+}
