@@ -1,5 +1,5 @@
 CoDaDendrogram2 = function(comp, V, equal.height=FALSE, range=c(-4,4),
-         show.range=TRUE, n_digits,
+         show.range=TRUE, n_digits=1,
          group=NULL,
          type="none", conf.level=0.95, conf.method="t", 
          pch.col = TRUE, ...) 
