@@ -159,7 +159,7 @@ CoDaDendrogram2 = function(comp, V, equal.height=FALSE, range=c(-4,4),
   if (show.range) {
     for (i in 1:(ncol(V))) {
       text(x = c(nodes[i, 1], nodes[i, 2]), y = heights[i],
-           labels = formatC(c(round(range[1,i],1), round(range[2,i],1)), format='f', digits=n_digits),
+           labels = formatC(c(round(range[1,i], n_digits), round(range[2,i], n_digits)), format='f', digits=n_digits),
            pos=3, cex=0.6)
     }
   }
