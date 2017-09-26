@@ -73,7 +73,7 @@ CoDaDendrogram2 = function(comp, V, equal.height=FALSE, range=c(-4,4),
       range_min = rep(NA, ncol(bal_o))
       range_max = range_min
       for (i in 1:nlevels(group)){
-        confrange = apply(bal_o[group==levels(group)[i], ], 2, ci)
+        confrange = apply(bal_o[group==levels(group)[i], ], 2, ci, level=conf.level)
         for (j in 1:ncol(bal_o)) {
           range_min[j] = min(range_min[j], confrange[1, j], na.rm=TRUE)
           range_max[j] = max(range_max[j], confrange[3, j], na.rm=TRUE)
