@@ -3,7 +3,9 @@ CoDaDendrogram2 = function(comp, V, equal.height=FALSE, range=c(-4,4),
          group=NULL,
          type="none", conf.level=0.95, conf.method="t", 
          pch.col = TRUE, ...) 
-  ######
+######
+# A fork of the CoDaDendrogram function in the compositions R package (van den Boogart et al., 2013)
+# CoDaDendrogram2 allows to plot statistics on the vertical branches.
 # comp: compositional matrix 
 # V: orthonormal basis
 # equal.heigh: boolean, if TRUE, vertival branches will all have the same height. 
