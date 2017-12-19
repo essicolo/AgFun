@@ -22,5 +22,8 @@ Functions for agricultural data analysis.
 ## Check if a coordinate is inside a polygon
 `is.inpoly.R`. Does what is says it does.
 
+## Plot results from linear discriminant analysis
+`plotDA_gg.R` contains a function for ploting LDA biplots with ggplot2, while `plotDA_trad.R` does the same with basic R plot.
+
 ## Computes mahalanobis distance from an itterated reference
 `sign1_ref.R`. For details check the paper [Plant ionome diagnosis using sound balances: case study with mango (Mangifera Indica)](http://journal.frontiersin.org/article/10.3389/fpls.2013.00449/full).
