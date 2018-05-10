@@ -2,6 +2,7 @@ CoDaDendrogram2 = function(comp, V, equal.height=FALSE, range=c(-4,4),
          show.range=TRUE, n_digits=1,
          group=NULL,
          type="none", conf.level=0.95, conf.method="t", 
+         leaf_las = 2,
          pch.col = TRUE, ...) 
 ######
 # A fork of the CoDaDendrogram function in the compositions R package (van den Boogart et al., 2013)
@@ -141,7 +142,7 @@ CoDaDendrogram2 = function(comp, V, equal.height=FALSE, range=c(-4,4),
   }
   
   ### leaf labels
-  axis(side = 1, at = 1:ncol(comp), labels = colnames(comp)[comp_id], las = 2, lty = 0) 
+  axis(side = 1, at = 1:ncol(comp), labels = colnames(comp)[comp_id], las = leaf_las, lty = 0) 
   
   ### horizontal bars
   for (i in 1:(ncol(V))) {
