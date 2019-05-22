@@ -1,6 +1,5 @@
 CateNelson <- function(x,y, xcn, ycn, TNpos="ul",
                        xlab="Test value", ylab="Heigth",
-                       stats = TRUE,
                        anovm=TRUE, anovm.span=0.1, anovm.degree=2,
                        dens.plot=TRUE,
                        colors="clarity", pch.cex=1.2,
@@ -298,23 +297,22 @@ CateNelson <- function(x,y, xcn, ycn, TNpos="ul",
          y=max(dens.h$y)/2, labels="HR", col="white")
     axis(side=1, at=round(xcn,2), cex.axis=0.8, font=2, padj=-1)
   }
-  
-  if (stats) {
-    out<-list()
-    out$table<-list(cnTable,
-                    paste("sensitivity =", round(sensitivity,2)),
-                    paste("specificity =", round(specificity,2)),
-                    paste("positive predictive value =", round(ppv,2)),
-                    paste("negative predictive value =", round(npv,2)),
-                    paste("prevalence =", round(prevalence,2)),
-                    paste("accuracy =", round(accuracy,2)))
-    out$type<-cnType
-    out$sensitivity <- sensitivity
-    out$specificity <- specificity
-    out$ppv <- ppv
-    out$npv <- npv
-    out$prevalence <- prevalence
-    out$accuracy <- accuracy
-    return(out)
-  }
+
+  out<-list()
+  out$table<-list(cnTable,
+                  paste("sensitivity =", round(sensitivity,2)),
+                  paste("specificity =", round(specificity,2)),
+                  paste("positive predictive value =", round(ppv,2)),
+                  paste("negative predictive value =", round(npv,2)),
+                  paste("prevalence =", round(prevalence,2)),
+                  paste("accuracy =", round(accuracy,2)))
+  out$type<-cnType
+  out$sensitivity <- sensitivity
+  out$specificity <- specificity
+  out$ppv <- ppv
+  out$npv <- npv
+  out$prevalence <- prevalence
+  out$accuracy <- accuracy
+
+  return(out)
 }
