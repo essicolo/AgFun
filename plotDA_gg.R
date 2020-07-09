@@ -26,10 +26,10 @@ plotDA <- function(scores, loadings=NULL, fac, groupfac=NULL, npoints=100, level
   ellErr<-list() 
   for (i in 1:length(levels(fac))) {
     tmp<-scores[fac == levels(fac)[i],]
-    ellErr[[i]]<-ellipse(cor(tmp),
-                         scale=c(sd(tmp[,1])/sqrt(nrow(tmp)), sd(tmp[,2])/sqrt(nrow(tmp))),
-                         centre=apply(tmp, 2, "mean"),
-                         level=level, npoints=npoints
+    ellErr[[i]] <- ellipse::ellipse(cor(tmp),
+                                    scale=c(sd(tmp[,1])/sqrt(nrow(tmp)), sd(tmp[,2])/sqrt(nrow(tmp))),
+                                    centre=apply(tmp, 2, "mean"),
+                                    level=level, npoints=npoints
     )
   }
   names(ellErr) <- levels(fac)
@@ -38,10 +38,10 @@ plotDA <- function(scores, loadings=NULL, fac, groupfac=NULL, npoints=100, level
   ellDev<-list() 
   for (i in 1:length(levels(fac))) {
     tmp<-scores[fac == levels(fac)[i],]
-    ellDev[[i]]<-ellipse(cor(tmp),
-                         scale=c(sd(tmp[,1]), sd(tmp[,2])),
-                         centre=c(mean(tmp[,1]),mean(tmp[,2])),
-                         level=level, npoints=npoints
+    ellDev[[i]] <- ellipse::ellipse(cor(tmp),
+                                    scale=c(sd(tmp[,1]), sd(tmp[,2])),
+                                    centre=c(mean(tmp[,1]),mean(tmp[,2])),
+                                    level=level, npoints=npoints
     )
   }
   names(ellDev) <- levels(fac)
@@ -50,10 +50,10 @@ plotDA <- function(scores, loadings=NULL, fac, groupfac=NULL, npoints=100, level
     ellDevGrp<-list() # deviation ellipses (conf. region about population)
     for (i in 1:length(levels(groupfac))) {
       tmp<-scores[groupfac == levels(groupfac)[i],]
-      ellDevGrp[[i]]<-ellipse(cor(tmp),
-                              scale=c(sd(tmp[,1]), sd(tmp[,2])),
-                              centre=c(mean(tmp[,1]),mean(tmp[,2])),
-                              level=level, npoints=npoints
+      ellDevGrp[[i]] <- ellipse::ellipse(cor(tmp),
+                                         scale=c(sd(tmp[,1]), sd(tmp[,2])),
+                                         centre=c(mean(tmp[,1]),mean(tmp[,2])),
+                                         level=level, npoints=npoints
       )
     }
     names(ellDevGrp) <- levels(groupfac)
